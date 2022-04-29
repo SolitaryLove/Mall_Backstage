@@ -66,8 +66,8 @@
                 </el-table>
             </el-form-item>
             <el-form-item label-width="80px">
-                <el-button type="primary">保存</el-button>
-                <el-button @click="$emit('update:visible',false)">取消</el-button>
+                <el-button type="primary" @click="addOrUpdateSpu">保存</el-button>
+                <el-button @click="cancel">取消</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -95,6 +95,7 @@ export default {
             trademarkList:[],// 请求初始化的所有品牌列表
             saleAttrList:[],// 请求初始化的所有销售属性列表
             unUseSaleAttrIdName:'',// 收集选中的未使用的销售属性id和name
+            category3Id:'',// 三级分类ID
         }
     },
     prop:['visible'],
@@ -125,6 +126,8 @@ export default {
         },
         // 请求获取修改spu的初始化数据
         async getUpdateSpuFormInitData(spu){
+            // 接收父组件传递的category3Id
+            this.category3Id=spu.category3Id;
             /* 发送4个请求
             1.根据spu的id获取spu的详情
             2.根据spu的id获取spu的图片列表
@@ -133,9 +136,8 @@ export default {
             const result=await this.$API.spu.get(spu.id);
             if(result.code===200){
                 this.spuForm=result.data;
-                // this.$set(this,'spuForm',result.data);
             }
-            const imageResult=await this.$API.sku.getSpuImageList(spu.id);
+            const imageResult=await this.$API.spu.getSpuImageList(spu.id);
             if(imageResult.code===200){
                 let spuImageList=imageResult.data;
                 // 让upload可以展示图片列表，将请求回来的图片数据中添加name和url
@@ -155,7 +157,9 @@ export default {
             }
         },
         // 请求获取添加spu的初始化数据
-        async getAddSpuFormInitData(){
+        async getAddSpuFormInitData(category3Id){
+            // 接收父组件传递的category3Id
+            this.category3Id=category3Id;
             const trademarkResult=await this.$API.trademark.getList();
             if(trademarkResult.code===200){
                 this.trademarkList=trademarkResult.data;
@@ -218,6 +222,66 @@ export default {
             row.inputVisible=false;
             row.inputValue='';
         },
+        // 点击保存按钮更新或保存的回调
+        async addOrUpdateSpu(){
+            let {spuForm,spuImageList,category3Id}=this;
+            // 整理参数
+            // 1.整理所上传照片的数据，需要携带imgName与imgUrl字段
+            spuForm.spuImageList=spuImageList.map(item=>
+                ({
+                    imgName:item.name,
+                    imgUrl:(item.response&&item.response.data||item.url),
+                })
+            );
+            // 2.整理收集category3Id
+            spuForm.category3Id=category3Id;
+            // 3.删除属性中的inputVisible和inputValue
+            spuForm.spuSaleAttrList.forEach(item=>{
+                delete item.inputVisible;
+                delete item.inputValue;
+            });
+            // 发送请求
+            try{
+                await this.$API.spu.reqAddOrUpdateSpu(this.spuForm);
+                this.$message.success("保存成功！");
+                // 返回父组件
+                this.$emit('update:visible',false);
+                // 通知父组件成功返回，在父组件中发送请求重新获取数据
+                this.$emit('successBack');
+                // 清空当前组件的data中所有数据
+                // 如果先修改后添加，修改时的数据依然存在
+                // 因为不是路由组件，需要手动清除数据
+                this.resetData();
+
+            }catch(error){
+                this.$message.error("保存失败！"+error);
+            }
+        },
+        // 重置数据
+        resetData(){
+            this.dialogImageUrl='',
+            this.dialogVisible=false,
+            this.spuForm={
+                category3Id:'',
+                description:'',
+                spuImageList:[],
+                spuName:'',
+                spuSaleAttrList:[],
+                tmId:'',
+            };
+            this.spuImageList=[];
+            this.trademarkList=[];
+            this.saleAttrList=[];
+            this.unUseSaleAttrIdName='';
+            this.category3Id='';
+        }
+        ,// 取消操作
+        cancel(){
+            // 返回父组件并重置数据
+            this.$emit('update:visible',false);
+            this.$emit('cancelBack');
+            this.resetData();
+        }
     }
 }
 </script>

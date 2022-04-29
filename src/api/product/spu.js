@@ -42,4 +42,49 @@ export default {
             params:{category3Id},
         });
     },
+
+    // 修改SPU||添加SPU：对于修改或者添加，携带给服务器参数大致一样，唯一的区别是否包含id
+    reqAddOrUpdateSpu(spuInfo){
+        // 携带的参数包含id——修改SPU
+        if(spuInfo.id){
+            return request({
+                url:'/admin/product/updateSpuInfo',
+                method:'POST',
+                data:spuInfo,
+            });
+        }else{// 携带的参数不包含id——保存SPU
+            return request({
+                url:'/admin/product/saveSpuInfo',
+                method:'POST',
+                data:spuInfo,
+            });
+        }
+    },
+
+    /* addUpdate(spuInfo){
+        return request({
+            url:`/admin/product/${spuInfo.id?'update':'save'}SpuInfo`,
+            method:'POST',
+            data:spuInfo
+        })
+    } */
+
+    // 获取指定SPU的id对应的图片列表
+    getSpuImageList(spuId){
+        return request.get(`/admin/product/spuImageList/${spuId}`);
+    },
+
+    // 获取指定SPU的id对应的销售属性列表
+    getSpuSaleAttrList(spuId){
+        return request.get(`/admin/product/spuSaleAttrList/${spuId}`);
+    },
+
+    // 添加SKU
+    reAddSku(skuInfo){
+        return request({
+            url:'/admin/product/saveSkuInfo',
+            method:'post',
+            data:skuInfo,
+        })
+    }
 }
