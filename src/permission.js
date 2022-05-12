@@ -33,8 +33,9 @@ router.beforeEach(async(to, from, next) => {
         try {
           // get user info
           await store.dispatch('user/getInfo')
+          // next()// 刷新白屏：动态添加的路由界面，不会刷新
+          next({...to,replace:true});// 必不可少的，确保动态路由创建成功再去执行其它代码
 
-          next()
         } catch (error) {
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')

@@ -93,6 +93,6 @@ export default {
         align-items:center;
     }
     .chart{
-        height:155px;
+        height:200px;
     }
 </style>

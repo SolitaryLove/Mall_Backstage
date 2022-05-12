@@ -91,7 +91,7 @@ export default {
         // 图表标题
         title(){
             return this.activeName=='sale'?'销售额':'访问量';
-        }
+        },
     },
     watch:{
         title(){
@@ -189,7 +189,7 @@ export default {
         margin:0 10px;
     }
     .charts{
-        width:100%;
+        width:92%;
         height:300px;
     }
     .rank ul{

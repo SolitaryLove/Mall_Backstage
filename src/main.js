@@ -37,6 +37,8 @@ Vue.use(ElementUI, { locale })
 // 引入接口请求函数
 import * as API from '@/api/product/index';
 Vue.prototype.$API=API;
+import * as APIs from '@/api/acl/index';
+Vue.prototype.$APIs=APIs;
 
 // 全局注册组件
 import CategorySelector from '@/components/CategorySelector';

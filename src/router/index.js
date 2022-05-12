@@ -30,6 +30,9 @@ import Layout from '@/layout'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
+
+/* (1)常量路由
+包含所有的用户都能操作的路由，也就是不需要权限就能操作的路由 */
 export const constantRoutes = [
   {
     path: '/login',
@@ -53,6 +56,61 @@ export const constantRoutes = [
       component: () => import('@/views/dashboard/index'),
       meta: { title: '首页', icon: 'dashboard' }
     }]
+  },
+
+  // 404 page must be placed at the end !!!
+  // { path: '*', redirect: '/404', hidden: true }
+]
+
+/* (2)异步路由
+根据用户返回的权限数据决定是否注册该路由 */
+export const allAsyncRoutes=[
+  // 权限数据管理相关的路由
+  {
+    name: 'Acl',
+    path: '/acl',
+    component: Layout,
+    redirect: '/acl/user/List',
+    meta: { 
+      title: '权限管理', 
+      icon: 'el-icon-lock' 
+    },
+    children: [
+      {
+        name: 'User',
+        path: 'user/List',
+        component: () => import('@/views/acl/user/List'),
+        meta: { 
+          title: '用户管理', 
+        },
+      },
+      {
+        name: 'Role',
+        path: 'role/List',
+        component: () => import('@/views/acl/role/List'),
+        meta: { 
+          title: '角色管理', 
+        },
+      },
+      {
+        name: 'RoleAuth',
+        path: 'role/auth/:id',
+        component: () => import('@/views/acl/role/roleAuth'),
+        meta: {
+          activeMenu: '/acl/role/List',
+          title: '角色授权',
+        },
+        hidden: true,
+      },
+      {
+        name: 'Permission',
+        path: 'permission/List',
+        component: () => import('@/views/acl/permission/List'),
+        meta: { 
+          title: '菜单管理',
+        },
+      },
+    ]
   },
 
   // 配置商品管理相关的路由
@@ -91,10 +149,15 @@ export const constantRoutes = [
       },
     ]
   },
-
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  
 ]
+
+/* (3)任意路由
+用户非法输入的路由信息，全部都会跳转到404页面
+注册这个路由时，一定要放置到最后 */
+export const anyRoute={ path: '*', redirect: '/404', hidden: true };
+
+
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
