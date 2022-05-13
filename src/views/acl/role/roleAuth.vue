@@ -66,7 +66,7 @@
 
       // 保存权限列表
       save() {
-        /* var ids = this.$refs.tree.getCheckedKeys().join(",")
+        // var ids = this.$refs.tree.getCheckedKeys().join(",")
         // 不需要修改源码
         let ids=this.$refs.tree.getCheckedKeys().concat(this.$refs.tree.getHalfCheckedKeys()).join(",");
 
