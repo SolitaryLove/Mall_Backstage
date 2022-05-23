@@ -1,6 +1,8 @@
 module.exports = {
 
-  title: 'Vue Admin Template',// 页面的标题
+  // title: 'Vue Admin Template',// 页面的标题
+  title: 'Mall_backstage',// 页面的标题
+
 
   /**
    * @type {boolean} true | false
