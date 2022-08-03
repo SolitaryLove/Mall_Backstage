@@ -93,11 +93,6 @@ const actions = {
           reject('Verification failed, please Login again.')
         }
 
-        /* const { name, avatar } = data
-
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar) */
-
         // 获取用户信息
         commit('SET_USERINFO',data);
         // bug：filterAsyncRoutes函数修改了原来的路由，导致更换账号登录后所获取的权限路由不完整，需要手动刷新

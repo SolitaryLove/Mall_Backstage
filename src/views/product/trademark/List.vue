@@ -140,10 +140,6 @@ export default {
         this.total=result.data.total;
       }
     },
-    /* handleCurrentChange(page){
-      this.page=page;
-      this.getTrademarkList();
-    } */
     // 切换每页显示数量的回调
     handleSizeChange(size){
       this.limit=size;
@@ -196,16 +192,16 @@ export default {
           // 验证通过
           let trademark=this.tmForm;
           try{
-          await this.$API.trademark.addOrUpdate(trademark);
-          this.$message.success(trademark.id?'修改品牌成功':'添加品牌成功');
-          // 关闭dialog框
-          this.dialogFormVisible=false;
-          // 如果添加成功，重新请求的是第一页数据，添加新的数据是在最后一页
-          // 如果修改成功，重新请求修改数据所在页
-          this.getTrademarkList(trademark.id?this.page:1);
+            await this.$API.trademark.addOrUpdate(trademark);
+            this.$message.success(trademark.id?'修改品牌成功':'添加品牌成功');
+            // 关闭dialog框
+            this.dialogFormVisible=false;
+            // 如果添加成功，重新请求的是第一页数据，添加新的数据是在最后一页
+            // 如果修改成功，重新请求修改数据所在页
+            this.getTrademarkList(trademark.id?this.page:1);
           }catch(error){
-          console.log(error)
-          this.$message.error(trademark.id?'修改品牌失败':'添加品牌失败');
+            console.log(error)
+            this.$message.error(trademark.id?'修改品牌失败':'添加品牌失败');
           }
         } else {
           console.log('error submit!!');
@@ -226,7 +222,7 @@ export default {
           this.$API.trademark.delete(row.id);
           this.$message.success('删除品牌成功！');
           // 正常删除哪个数据回到其所在的页面
-          // 假所删除的数据那一页只有一条数据，需要回到前一页
+          // 假使所删除的数据那一页只有一条数据，需要回到前一页
           this.getTrademarkList(this.trademarkList.length>1?this.page:this.page-1>0?this.page:1);
         }catch(error){
           console.log(error);

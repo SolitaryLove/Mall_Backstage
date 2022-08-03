@@ -67,9 +67,10 @@
       // 保存权限列表
       save() {
         // var ids = this.$refs.tree.getCheckedKeys().join(",")
-        // 不需要修改源码
+        /* 不需要修改源码：
+        getCheckedKeys：若节点可被选择（即show-checkbox为true），则返回目前被选中的节点的 key 所组成的数组
+        getHalfCheckedNodes：若节点可被选择（即show-checkbox为true），则返回目前半选中的节点所组成的数组 */
         let ids=this.$refs.tree.getCheckedKeys().concat(this.$refs.tree.getHalfCheckedKeys()).join(",");
-
         /* 
         vue elementUI tree树形控件获取父节点ID的实例
         修改源码:

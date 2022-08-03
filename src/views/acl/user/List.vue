@@ -264,7 +264,6 @@ export default {
     showAddUser () {
       this.user = {}
       this.dialogUserVisible = true
-
       this.$nextTick(() => this.$refs.userForm.clearValidate())
     },
 

@@ -60,7 +60,6 @@
             @click="updateRole(row)" v-if="row.edit"/>
           <HintButton size="mini" type="primary" icon="el-icon-edit" title="修改角色" 
             @click="row.edit= true" v-if="!row.edit"/>
-
             
           <HintButton size="mini" type="danger" icon="el-icon-delete" title="删除角色"
             @click="removeRole(row)"/>
@@ -110,7 +109,6 @@ export default {
   },
 
   methods: {
-
     /* 
     取消修改
     */

@@ -27,6 +27,7 @@ export default {
     this.getBreadcrumb()
   },
   methods: {
+    // 保证Breadcrumb导航信息第一列为首页
     getBreadcrumb() {
       // only show routes with meta.title
       let matched = this.$route.matched.filter(item => item.meta && item.meta.title)

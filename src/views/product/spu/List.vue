@@ -75,7 +75,7 @@ export default {
       // scene:0,// 0代表展示SPU列表数据 1添加SPU|修改SPU 2添加SKU
       // 分页列表所需数据
       page:1,
-      limit:2,
+      limit:5,
       total:0,
       // 控制页面的显示隐藏
       isShowSpuForm:false,

@@ -5,6 +5,7 @@
       <CategorySelector @handlerCategory="handlerCategory" :isShowList="isShowList"></CategorySelector>
     </el-card>
     <el-card style="margin-top:20px">
+
       <!-- 属性列表页 -->
       <div v-show="isShowList">
         <el-button type="primary" icon="el-icon-plus" @click="showAddDiv" :disabled="!category3Id">添加属性</el-button>
@@ -56,7 +57,7 @@
             <template v-slot="{row,$index}">
               <!-- onConfirm事件：点击气泡确认框 -->
               <el-popconfirm :title="`你确定要删除${row.valueName}这个属性值吗？`" 
-              @onConfirm="attrForm.attrValueList.splice($index,1)">
+                @onConfirm="attrForm.attrValueList.splice($index,1)">
                 <HintButton slot="reference" type="danger" icon="el-icon-delete" title="删除" size="mini"></HintButton>
               </el-popconfirm>
             </template>

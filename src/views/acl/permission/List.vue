@@ -143,9 +143,7 @@ export default {
   },
 
   computed: {
-    /* 
-    动态计算得到Dialog的标题
-    */
+    // 动态计算得到Dialog的标题
     dialogTitle () {
       const {id, level} = this.permission
       if (id) {
@@ -155,9 +153,7 @@ export default {
       }
     },
 
-    /* 
-    根据权限的等级来计算确定校验规则
-    */
+    // 根据权限的等级来计算确定校验规则
     permissionRules () {
       return this.permission.level===4 ? btnRules : menuRules
     }
@@ -168,7 +164,6 @@ export default {
   },
 
   methods: {
-
     /* 
     根据级别得到要显示的添加dialog的标题
     */
@@ -186,6 +181,7 @@ export default {
     async fetchPermissionList() {
       const result = await this.$APIs.permission.getPermissionList()
       this.menuPermissionList = result.data.children
+      // 设置 Table 目前的展开项
       this.expandKeys = [this.menuPermissionList[0].id]
     },
 

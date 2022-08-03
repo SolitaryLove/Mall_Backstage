@@ -17,7 +17,7 @@
       <el-table-column prop="price" label="价格(元)" width="80"></el-table-column>
       <el-table-column label="操作" width="250" align>
         <template v-slot="{row}">
-          <HintButton v-if="row.isSale==0" title="上架"
+          <HintButton v-if="row.isSale == 0" title="上架"
             type="info" size="mini" icon="el-icon-top"
             @click="onSale(row.id)"/>
 
@@ -106,7 +106,6 @@ export default {
   },
   mounted(){
     this.getSkuList();
-    
   },
   methods:{
     // 修改sku，暂无接口

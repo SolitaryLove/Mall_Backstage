@@ -48,6 +48,7 @@ export default {
     ])
   },
   methods: {
+    // 切换侧边栏展开状态
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
